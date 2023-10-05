@@ -6,54 +6,65 @@ function getCookie(name) {
   const value = "; " + document.cookie;
   const parts = value.split("; " + name + "=");
   if (parts.length === 2) {
-    let cookieValue = decodeURIComponent(parts.pop().split(";").shift());
-    return cookieValue.replace('+', ' ');  // + 문자를 공백으로 변환
+    return decodeURIComponent(parts.pop().split(";").shift());
   }
 }
 
 function MoreInfoPage() {
-    const [explain, setExplain] = useState('');
-    const [mbti, setMbti] = useState('');
-    const navigate = useNavigate();  // useNavigate hook을 사용하여 navigate 함수를 가져옵니다.
+    const [mbti, setMbti] = useState('');        // MBTI
+    const [gender, setGender] = useState('');    // 성별
+    const [nickname, setNickname] = useState('');// 닉네임
+    const [face, setface] = useState(''); // 닮은꼴
+    const [selfInfo, setSelfInfo] = useState('');   // 자신에 대한 정보
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
   
-      const accessToken = getCookie("accessCookie");
-
-      console.log(accessToken);
+        const accessToken = getCookie("accessCookie");
   
-      const response = await fetch('http://localhost:8080/api/submitMoreInfo', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': accessToken  // "Bearer" 포함한 accessToken을 헤더에 추가
-          },
-          body: JSON.stringify({ explain, mbti })
-      });
+        const response = await fetch('http://localhost:8080/api/v1/users/additional', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': accessToken
+            },
+            body: JSON.stringify({ mbti, gender, nickname, face, selfInfo })
+        });
   
-      if (response.ok) {
-          console.log("데이터가 성공적으로 전송되었습니다.");
-          navigate('/chat');  // 성공적으로 데이터를 전송한 후 ChatPage로 리다이렉트합니다.
-      } else {
-          console.error("데이터 전송에 실패했습니다.");
-      }
+        if (response.ok) {
+            navigate('/chat');
+        } else {
+            console.error("데이터 전송에 실패했습니다.");
+        }
     };
-  
+
     return (
         <div>
             <h2>추가 정보 입력</h2>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="explain">자기소개:</label>
-                <textarea id="explain" name="explain" rows="4" cols="50" required value={explain} onChange={e => setExplain(e.target.value)}></textarea>
+                {/* 기존의 입력 필드들... */}
+                <label htmlFor="gender">성별:</label>
+                <input type="text" id="gender" name="gender" required value={gender} onChange={e => setGender(e.target.value)} />
                 <br />
-                <label htmlFor="mbti">MBTI:</label>
+                <label htmlFor="mbti">mbti:</label>
                 <input type="text" id="mbti" name="mbti" required value={mbti} onChange={e => setMbti(e.target.value)} />
+                <br />
+                <label htmlFor="nickname">닉네임:</label>
+                <input type="text" id="nickname" name="nickname" required value={nickname} onChange={e => setNickname(e.target.value)} />
+                <br />
+                <label htmlFor="face">닮은꼴:</label>
+                <input type="text" id="face" name="face" required value={face} onChange={e => setface(e.target.value)} />
+                <br />
+                <label htmlFor="selfInfo">자신에 대한 정보:</label>
+                <input type="text" id="selfInfo" name="selfInfo" required value={selfInfo} onChange={e => setSelfInfo(e.target.value)} />
                 <br />
                 <input type="submit" value="제출" />
             </form>
         </div>
     );
 }
+
 
 export default MoreInfoPage;
