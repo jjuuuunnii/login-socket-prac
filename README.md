@@ -1,1 +1,3 @@
-터미널 열고 npm run start로 시작하기!
+# login-socket-prac
+
+- 소켓과 로그인 관련 코드입니다
