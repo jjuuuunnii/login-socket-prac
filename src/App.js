@@ -9,7 +9,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<LoginPage />} />
-                <Route path="/userInfo" element={<MoreInfoPage />} />
+                <Route path="/profile" element={<MoreInfoPage />} />
                 <Route path="/chat" element={<ChatPage />} />
             </Routes>
         </Router>

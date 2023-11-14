@@ -58,7 +58,7 @@ function ChatPage() {
     return (
         <div>
             <h2>Chat Test</h2>
-            Server URL: <input type="text" ref={serverUrlRef} defaultValue="http://localhost:8080/ws-connection" /><br />
+            Server URL: <input type="text" ref={serverUrlRef} defaultValue="http://localhost:8080/ws-check" /><br />
             Sender ID: <input type="text" ref={senderIdRef} defaultValue="1" /><br />
             Receiver ID: <input type="text" ref={receiverIdRef} defaultValue="2" /><br />
             Room ID: <input type="text" ref={roomIdRef} defaultValue="1001" /><br />
