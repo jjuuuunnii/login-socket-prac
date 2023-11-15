@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 function ChatRoomPage({ match }) {
-    const roomId = match.params.roomId;
+    const eventId = match.params.eventId;
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
 
     useEffect(() => {
-        fetch(`/api/chatRooms/${roomId}/messages`)
+        fetch(`/api/chatRooms/${eventId}/messages`)
             .then(response => response.json())
             .then(data => setMessages(data))
             .catch(error => console.error("Error fetching messages:", error));
-    }, [roomId]);
+    }, [eventId]);
 
     const handleSendMessage = () => {
         // TODO: 서버로 메시지 전송 로직
@@ -18,10 +18,10 @@ function ChatRoomPage({ match }) {
 
     return (
         <div>
-            <h2>Chat Room: {roomId}</h2>
+            <h2>Chat Room: {eventId}</h2>
             <ul>
                 {messages.map((msg, index) => (
-                    <li key={index}>{msg.senderId}: {msg.message}</li>
+                    <li key={index}>{msg.userId}: {msg.message}</li>
                 ))}
             </ul>
             <div>
