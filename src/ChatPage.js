@@ -48,7 +48,7 @@ function ChatPage() {
     };
 
     const showMessageOutput = (messageOutput) => {
-        setMessages(prevMessages => [...prevMessages, `${messageOutput.userId}: ${messageOutput.message}`]);
+        setMessages(prevMessages => [...prevMessages, `${messageOutput.userId}: ${messageOutput.checkStatus}`]);
     };
 
     return (
